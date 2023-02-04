@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h3>{{post.post_name}}</h3>
+<p>{{post.description}}</p>
+
+<div class="comment-frapper">
+        <h4>Conversation:</h4>
+        <hr>
+
+        {% for a in comment %}
+                <div>
+                        {% if user == a.user %}
+                        <a href="{% url 'delete-comment' a.id %}" >Delete</a>
+                        {% endif %}
+                        <a><strong>@{{a.user}}</strong> {{a.created|timesince}} ago </a>
+                        <br>
+                        <a>{{a.body}}</a>
+                        <hr>
+
+                </div>
+        {% endfor %}
+</div>
+
+
+{% if request.user.is_authenticated %}
+<div class="comment-form">
+        <form method="POST" action="">
+                {% csrf_token %}
+                <input type="text" name="body" placeholder="Write your message here" />
+        </form>
+</div>
+{% endif %}
+
+{% endblock %}

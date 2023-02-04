@@ -1,0 +1,17 @@
+{% for a in posts %}
+    <div>
+        {% if user == a.post_host %}
+        <a href="{% url 'update-post' a.id %}">Edit</a>
+        <a href="{% url 'delete-post' a.id %}">Delete</a>
+        {% endif %}
+        {% if a.post_host.id %}
+        <a href="{% url 'user-profile' a.post_host.id %}"><strong>@{{a.post_host}}</strong></a>
+        {% endif %}
+        <small>{{ a.updated |timesince}} ago </small>
+        <h5><a href="{% url 'topic' a.id %}">{{a.post_name}}</a></h5>
+        {% for i in a.interest_tag.all %}
+        <p>{{i}}</p>
+        {% endfor %}
+        <hr>
+    </div>
+{% endfor %}

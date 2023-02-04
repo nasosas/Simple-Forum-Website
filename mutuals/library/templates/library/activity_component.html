@@ -1,0 +1,16 @@
+<div>
+<hr3>Recent activity</hr3>
+<hr>
+{% for a in activity_comments %}
+    <div>
+        <small><a href="{% url 'user-profile' a.user.id %}">@{{a.user}}</a> {{a.updated|timesince}}</small>
+        <small>replied to: <a href="{% url 'topic' a.id %}">{{a.post}}</a></small>
+
+        <p>{{a.body}}</p>
+        {% if user == a.user %}
+        <a href="{% url 'delete-comment' a.id %}" >Delete</a>
+        {% endif %}
+        <hr>
+    </div>
+{% endfor %}
+</div>
